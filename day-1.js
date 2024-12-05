@@ -42,12 +42,6 @@ function question1(input) {
 
 assert.strictEqual(question1(testInput), testAnswer1);
 
-console.assert(
-  question1(testInput) === testAnswer1,
-  question1(testInput),
-  testAnswer1,
-);
-
 console.log("Answer question 1:", question1(input));
 
 function question2(input) {
