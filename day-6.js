@@ -19,7 +19,7 @@ const testInput = `....#.....
 const testAnswer1 = 41;
 const testAnswer2 = 6;
 
-const input = readFileSync(`input-day-${day}.txt`, "utf-8");
+const input = readFileSync(`input-day-${day}.txt`, "utf-8").replace("\r", "");
 
 function parse(input) {
   const rows = input.split("\n");
@@ -42,9 +42,7 @@ function parse(input) {
 }
 
 const turnRight = { up: "right", right: "down", down: "left", left: "up" };
-function question1(input) {
-  const { grid, start, max } = parse(input);
-
+function getVisited(grid, start, max) {
   let visited = {};
   let direction = "up";
   let { x, y } = start;
@@ -78,7 +76,11 @@ function question1(input) {
       y = next.y;
     }
   }
-
+  return visited;
+}
+function question1(input) {
+  const { grid, start, max } = parse(input);
+  const visited = getVisited(grid, start, max);
   return Object.keys(visited).length;
 }
 
@@ -87,12 +89,14 @@ assert.strictEqual(question1(testInput), testAnswer1);
 console.log("Answer question 1:", question1(input));
 
 function question2(input) {
-  const possibleSpots = [];
-  for (let i = 0; i < input.length; i++) {
-    if (input[i] === ".") {
-      possibleSpots.push(i);
-    }
-  }
+  const { grid, start, max } = parse(input);
+  const visited = getVisited(grid, start, max);
+
+  const possibleSpots = Object.keys(visited).map((s) => {
+    const [x, y] = s.split(",").map(Number);
+    const index = y * (input.split("\n")[0].length + 1) + x;
+    return index;
+  });
 
   let count = 0;
   possibleSpots.forEach((spot) => {
