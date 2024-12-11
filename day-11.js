@@ -25,11 +25,7 @@ function add(stones, stone, amount = 1) {
   stones[stone] += amount;
 }
 
-const transformCach = {};
 function transform(stone) {
-  if (transformCach[stone]) {
-    return transformCach[stone];
-  }
   let result;
   const string = stone.toString();
   if (stone === 0) {
@@ -40,7 +36,6 @@ function transform(stone) {
   } else {
     result = [Number(stone) * 2024];
   }
-  transformCach[stone] = result;
   return result;
 }
 
@@ -77,5 +72,4 @@ function question2(input) {
   let stones = parse(input);
   return countStones(blinks(stones, 75));
 }
-
 console.log("Answer question 2:", question2(input));
