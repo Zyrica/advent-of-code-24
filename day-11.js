@@ -12,25 +12,19 @@ const testAnswer2 = null;
 const input = readFileSync(`input-day-${day}.txt`, "utf-8");
 
 function parse(input) {
-  const stones = input.replaceAll("\r", "").split(" ");
-  return stones;
+  return input.replaceAll("\r", "").split(" ").map(Number);
 }
 
-function removeLeadingZeroes(stone) {
-  return stone.replace(/^0+/, "") || "0";
-}
 function transform(stone) {
   let result;
-  if (stone === "0") {
-    result = ["1"];
-  } else if (stone.length % 2 === 0) {
-    let half = stone.length / 2;
-    result = [
-      removeLeadingZeroes(stone.slice(0, half)),
-      removeLeadingZeroes(stone.slice(-half)),
-    ];
+  const string = stone.toString();
+  if (stone === 0) {
+    result = [1];
+  } else if (string.length % 2 === 0) {
+    let half = string.length / 2;
+    result = [Number(string.slice(0, half)), Number(string.slice(-half))];
   } else {
-    result = ["" + Number(stone) * 2024];
+    result = [Number(stone) * 2024];
   }
   return result;
 }
@@ -45,6 +39,7 @@ function blinks(stones, blinks) {
   let result = stones;
   for (let i = 0; i < blinks; i++) {
     result = blink(result);
+    console.log(i + 1, result.length);
   }
   return result;
 }
