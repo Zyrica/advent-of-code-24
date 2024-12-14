@@ -2,6 +2,7 @@
   "name": "advent-of-code-2024",
   "type": "module",
   "dependencies": {
+    "jimp": "^1.6.0",
     "nodemon": "^3.1.7"
   }
 }
